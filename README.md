@@ -1,37 +1,24 @@
-# Technical Assignment
+# Summary
+To get the PM2.5 daily data from CPCB(India) for all stations located in Kolkata and Lucknow using code only, and provide an interactive 365-day running average chart for these two cities from 2020 onward, using stations average.
 
-This is a technical assignment for the data engineer / data scientist position at CREA.
+## Part 1b
+- Refer to ScrapeCPCB.py and PlotCPCB.ipynb
+- In order to collect the data from the CPCB website, I used Selenium with the Crhome webdriver. 
+- First step was to fill the State and City info, in order to get the list of all the station names for each state (West Bengal & Kolkata).
+- The solution then goes through filling the State, City, Station Name and more parameters like PM2.5 and setting the date as 01-01-2020 from the Calendar datepicker.
+![Screenshot from 2022-06-27 18-44-55](https://user-images.githubusercontent.com/14858227/175950636-7b708477-6b7f-46bf-997f-4178b05647a5.png)
 
-## Part 1a - Data analysis and visualisation
+- It finds the 'Submit' button and then the web browser is prompted to a webpage where the data is visible and ready to be export to an Excel file which is saved in the data directory of the solution.
+![Screenshot from 2022-06-27 18-47-01](https://user-images.githubusercontent.com/14858227/175950921-0c71ca17-3c96-4965-924a-9c6ed0d99fe8.png)
 
-We at CREA have developed an online system that collects air pollution data from a dozen sources globally. In this assignment, we would like you to extract and present some insights using this dataset. Namely, we would like you to present in a single graph (subplots/facets authorised):
 
-- the share of population covered by stations within radii of 5, 10, 50km and beyond for US, UK, Turkey, Thailand, Philippines, India. Population data available here: [data/gpw_v4_population_density_rev11_2020_15_min.tif](data/gpw_v4_population_density_rev11_2020_15_min.tif).
+-There are a lot of 'None' values in the data collated from CPCB. For calculating the rolling averages, solution keeps a counter which gets reduced by 1 each time a 'None' is detected in the dataframes' PM2.5 value. It also resetting the 'None' PM2.5 value to be 0 afterwards. Finally adding the PM2.5 values and the counter to later find accurate averages.
 
-You can use either R or Python for data analysis, and any library or platform to create charts, except Tableau and PowerBI. Code and results can be hosted on a Markdown document, Jupyter notebook, R markdown, simple code and image files, or interactive web page.
+- The PlotCPCB.ipynb has the relevant functions for the above logic as well as rolling average plots generated. Plotly was used for generating interactive plots and the same is saved as HTML(MovingAvgsLucknowKolkata.html).
 
-## Part 1b (Optional) - Data scraping and visualisation
 
-If you have no experience with geospatial data and find yourself struggling with Part 1a, you can work on Part 1b instead. If you have finished Part 1a, you can skip directly to Part 2.
-
-Here is a portal to access India's air quality: [CPCB](https://app.cpcbccr.com/ccr/#/caaqm-dashboard-all/caaqm-landing/data)
-
-Collect PM2.5 daily data for all stations located in Kolkata and Lucknow using code only, and provide an **interactive** 365-day running average chart for these two cities from 2020 onward, using stations average.
-
-## Part 2 - Architecture
-
-What would be your suggested and/or favourite stack to collect and serve air pollution data to users? (e.g. regular scraping, backend, data storage, frontend). Please provide justification or explanation if you have any. Keep it short!
-
-## Comments
-
-We are interested in the way you solve the problems, how you structure your code and how you present results. There is no particular trap but if you have any doubt or question, feel free to contact [me](hubert@energyandcleanair.org) directly.
-
-## Submission
-
-Steps:
-
-- fork this repository;
-- push your code, results and answers;
-- invite [me](hubert@energyandcleanair.org) as a collaborator on your repository once you are done.
-
-If required, you can push your results to another platform and share the link(s) with me.
+## Part 2
+- For the purposes of scraping and collecting data, I found Selenium to be more useful than BeautfulSoup for this particular problem statement.
+- Currently the data is being stored in .xlsx files but can easily be migrated to SQL or NOSQL (MongoDB) databases. Cloud Storage platforms like Google Big Query and Amazon Redshift can also be used. We can also operate DB operations on the data (handle missing values,store counts) for reducing the preprocessing steps involved.
+- Kafka Queues can be very helpful for serving a multitude of requests.
+- For generating the plots, Plotly can generate decent looking interactive plots which can be saved or shared and embedded to a website using Django/Flask/FastAPI.
