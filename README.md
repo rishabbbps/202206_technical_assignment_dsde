@@ -8,7 +8,13 @@ To get the PM2.5 daily data from CPCB(India) for all stations located in Kolkata
 - The solution then goes through filling the State, City, Station Name and more parameters like PM2.5 and setting the date as 01-01-2020 from the Calendar datepicker.
 ![Screenshot from 2022-06-27 18-44-55](https://user-images.githubusercontent.com/14858227/175950636-7b708477-6b7f-46bf-997f-4178b05647a5.png)
 
+
+
+
 - It finds the 'Submit' button and then the web browser is prompted to a webpage where the data is visible and ready to be export to an Excel file which is saved in the data directory of the solution.
+
+
+
 ![Screenshot from 2022-06-27 18-47-01](https://user-images.githubusercontent.com/14858227/175950921-0c71ca17-3c96-4965-924a-9c6ed0d99fe8.png)
 
 
